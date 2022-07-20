@@ -5,13 +5,10 @@ alert("Welcome to the ROCK-PAPER-SCISSORS game!");
 let keepGoing = true;
 // while(keepGoing)    {
 
-// on demande au joueur quel choix il veut faire
-const playerChoice = setPlayerChoice(); 
-
 // le joueur choisit une réponse entre les 3 options proposées et la réponse est stockée dans une variable const
-const answerPlayer = getPlayerChoice(playerChoice);
+const answerPlayer = setPlayerChoice();
 
-//     - l'ordinateur choisit une réponse, qui sera aléatoire donc, entre les 3 options proposées
+// l'ordinateur choisit une réponse, qui sera aléatoire donc, entre les 3 options proposées
 const answerComputer = getComputerChoice();
 //     - le choix est stocké dans une variable
 
@@ -29,30 +26,10 @@ const answerComputer = getComputerChoice();
 
 // }
 
-//FAIRE UNE FONCTION QUI RETURN LE CHOIX DU JOUEUR (afficher une string pour confirmer le choix du joueur (ex : "vous avez choisi 'pierre'"))
 
-function getPlayerChoice(choice)    {
-    alert(`You picked ${choice}`);
-    return choice;
-}
-
-function setPlayerChoice()    {
-    // on initialise une boucle qui va vérifier la valeur entrée par le joueur
-    let keepGoing = true;
-    while(keepGoing){
-
-        let value = prompt("Make your choice by typing the associated number! Rocks(1), Papers(2) or Scissors(3)?");
-        let choice = setChoice(value);
-        if (value == "1" || value == "2" || value == "3")   {
-            keepGoing = false;
-            return choice;
-        }
-    }
-}
-
-function setChoice(choice)    {
+function setChoice(choice)    { // return la string adéquate en fonction du chiffre choisit
     
-    if (choice == "1")  {   // quand le joueur a choisi, on change la valeur de keepGoing pour terminer la boucle et on return le choix correspondant
+    if (choice == "1")  {   
         choice = "Rocks";
         return choice;
     }
@@ -64,16 +41,32 @@ function setChoice(choice)    {
         choice = "Scissors";
         return choice;
     }
-    else    {   // si la valeur est différente de 1, 2 ou 3 alors on affiche un message d'erreur et on recommence la boucle
+    else    {   // si la valeur est différente de 1, 2 ou 3 alors on affiche un message d'erreur
         alert("Please pick a number between 1 and 3");
         return choice;
     }
     
 }
 
+function setPlayerChoice()    { // vérifie le choix du joueur et return le choix en question
+
+    // on initialise une boucle qui va vérifier la valeur entrée par le joueur
+    let keepGoing = true;
+    while(keepGoing){
+
+        let value = prompt("Make your choice by typing the associated number! Rocks(1), Papers(2) or Scissors(3)?");
+        let choice = setChoice(value);
+        if (value == "1" || value == "2" || value == "3")   {   // si la valeur est bonne on termine la boucle
+            keepGoing = false;
+            alert(`You picked ${choice}`);
+            return choice;
+        }
+    }
+}
+
 function getComputerChoice()    {   // return le choix de l'ordinateur
-    let random = Math.floor(Math.random() * 3) + 1;
-    let value = setChoice(random);
+    let random = Math.floor(Math.random() * 3) + 1; // permet de donner un chiffre aléatoire (entre 1 et 3 inclus)
+    let value = setChoice(random);  // on utilise la fonction setChoice pour tranformer notre chiffre aléatoire en string (ex : "Papers")
     alert(`The computer picked ${value}`);
     return value;
 }
