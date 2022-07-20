@@ -1,31 +1,13 @@
 // souhaiter la bienvenue dans le jeu
 alert("Welcome to the ROCK-PAPER-SCISSORS game!");
 
-// on initialise la boucle while
-let keepGoing = true;
-// while(keepGoing)    {
+// on définit deux variables qui vont calculer les points du joueur et les points de l'ordinateur
+let pointsPlayer = 0;
+let pointsComputer = 0;
 
-// le joueur choisit une réponse entre les 3 options proposées et la réponse est stockée dans une variable const
-const answerPlayer = setPlayerChoice();
+game();
 
-// l'ordinateur choisit une réponse, qui sera aléatoire donc, entre les 3 options proposées
-const answerComputer = getComputerChoice();
-//     - le choix est stocké dans une variable
-
-//     - Le programme compare les résultats avec des conditions (perdant / gagnant / égalité) et affiche le message correspondant
-//             FAIRE UNE FONCTION QUI COMPARE LES RESULTATS
-//             FAIRE UNE FONCTION QUI AFFICHE LE RESULTAT
-
-//     - proposer au joueur une nouvelle partie
-//     si oui => relancer la boucle
-//     sinon => stopper la boucle
-//             FAIRE UNE FONCTION QUI RETURN UN BOOLEAN(keepGOING) SI OUI OU NON LA BOUCLE SE RELANCE
-//     }
-
-// fermer le programme avec un message (ex : vous décidez d'arrêter là, merci d'avoir joué à bientôt)
-
-// }
-
+//--------------------------------------FUNCTIONS--------------------------------------------------------------------------------------
 
 function setChoice(choice)    { // return la string adéquate en fonction du chiffre choisit
     
@@ -69,4 +51,81 @@ function getComputerChoice()    {   // return le choix de l'ordinateur
     let value = setChoice(random);  // on utilise la fonction setChoice pour tranformer notre chiffre aléatoire en string (ex : "Papers")
     alert(`The computer picked ${value}`);
     return value;
+}
+
+function playRound(playerChoice, computerChoice)  {    // fonction qui compare les résultats et annonce le gagnant
+
+    // si le joueur choisit papier
+    if (playerChoice == "Papers")   {
+        if(computerChoice == "Rocks")  {
+            alert("Wujuuuuu! You won!");
+            pointsPlayer++;
+        }
+        else if (computerChoice == playerChoice) {
+            alert("That's an even!");
+        } 
+        else    {
+            alert("You lost :(");
+            pointsComputer++;
+        }
+    }
+    // si le joueur choisit ciseaux
+    if (playerChoice == "Scissors")   {
+        if(computerChoice == "Papers")  {
+            alert("Wujuuuuu! You won!");
+            pointsPlayer++;
+        }
+        else if (computerChoice == playerChoice) {
+            alert("That's an even!");
+        } 
+        else    {
+            alert("You lost :(");
+            pointsComputer++;
+        }
+    }
+    // si le joueur choisit pierre
+    if (playerChoice == "Rocks")   {
+        if(computerChoice == "Scissors")  {
+            alert("Wujuuuuu! You won!");
+            pointsPlayer++;
+        }
+        else if (computerChoice == playerChoice) {
+            alert("That's an even!");
+        } 
+        else    {
+            alert("You lost :(");
+            pointsComputer++;
+        }
+    }
+
+}
+
+function game() {
+    
+    let counter = 0;
+
+    for (counter; counter < 5; counter++)   {
+
+        // le joueur choisit une réponse entre les 3 options proposées et la réponse est stockée dans une variable const
+        const choicePlayer = setPlayerChoice();
+
+        // l'ordinateur choisit une réponse, qui sera aléatoire donc, entre les 3 options proposées
+        const choiceComputer = getComputerChoice();
+
+        // on compare les résultats et affiche le message correspondant
+        playRound(choicePlayer, choiceComputer);
+    }
+
+    calculPoints(pointsPlayer, pointsComputer);
+
+}
+
+function calculPoints(playerPoints, computerPoints) {
+
+    if (playerPoints > computerPoints)  {
+        alert("You won! Congratulations!");
+    }
+    else    {
+        alert("You lost! Ahah looser!");
+    }
 }
