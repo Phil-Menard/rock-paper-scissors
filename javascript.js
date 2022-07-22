@@ -1,5 +1,5 @@
 // souhaiter la bienvenue dans le jeu
-alert("Welcome to the ROCK-PAPER-SCISSORS game!");
+console.log("Welcome to the ROCK-PAPER-SCISSORS game!");
 
 // on définit deux variables qui vont calculer les points du joueur et les points de l'ordinateur
 let pointsPlayer = 0;
@@ -7,94 +7,79 @@ let pointsComputer = 0;
 
 game();
 
-//--------------------------------------FUNCTIONS--------------------------------------------------------------------------------------
+//--------------------------------------FUNCTIONS-------------------------------------------\\
 
-function setChoice(choice)    { // return la string adéquate en fonction du chiffre choisit
-    
-    if (choice == "1")  {   
-        choice = "Rocks";
-        return choice;
-    }
-    else if(choice == "2")    {
-        choice = "Papers";
-        return choice;
-    }
-    else if(choice == "3")    {
-        choice = "Scissors";
-        return choice;
-    }
-    else    {   // si la valeur est différente de 1, 2 ou 3 alors on affiche un message d'erreur
-        alert("Please pick a number between 1 and 3");
-        return choice;
-    }
-    
-}
 
-function setPlayerChoice()    { // vérifie le choix du joueur et return le choix en question
-
-    // on initialise une boucle qui va vérifier la valeur entrée par le joueur
-    let keepGoing = true;
-    while(keepGoing){
-
-        let value = prompt("Make your choice by typing the associated number! Rocks(1), Papers(2) or Scissors(3)?");
-        let choice = setChoice(value);
-        if (value == "1" || value == "2" || value == "3")   {   // si la valeur est bonne on termine la boucle
-            keepGoing = false;
-            alert(`You picked ${choice}`);
-            return choice;
-        }
-    }
+function getPlayerChoice()  {   // return le choix du joueur (NE GERE PS ENCORE LES ERREURS)
+    let choice = prompt("Paper | Rock | scissor");
+    let answer = choice.toLowerCase();
+    console.log(`You picked ${answer}`);
+    return answer;
 }
 
 function getComputerChoice()    {   // return le choix de l'ordinateur
-    let random = Math.floor(Math.random() * 3) + 1; // permet de donner un chiffre aléatoire (entre 1 et 3 inclus)
-    let value = setChoice(random);  // on utilise la fonction setChoice pour tranformer notre chiffre aléatoire en string (ex : "Papers")
-    alert(`The computer picked ${value}`);
-    return value;
+    let index = Math.floor(Math.random() * 3); // permet de donner un nombre aléatoire entre 1 et 3
+    let options = ["rock", "paper", "scissor"];
+    let result = options[index];    // on choisit une option entre les trois grace a l'index aléatoire
+    console.log(`The computer picked ${result}`);
+    return result;
+}
+
+function displayPoints(playerPoints, computerPoints)    {
+    console.log(`Player : ${playerPoints} | ${computerPoints} : Computer`);
 }
 
 function playRound(playerChoice, computerChoice)  {    // fonction qui compare les résultats et annonce le gagnant
 
     // si le joueur choisit papier
-    if (playerChoice == "Papers")   {
-        if(computerChoice == "Rocks")  {
-            alert("Wujuuuuu! You won!");
+    if (playerChoice == "paper")   {
+        if(computerChoice == "rock")  {
+            console.log("Paper beats Rock!");
             pointsPlayer++;
+            displayPoints(pointsPlayer, pointsComputer);
         }
         else if (computerChoice == playerChoice) {
-            alert("That's an even!");
+            console.log("That's an even!");
+            displayPoints(pointsPlayer, pointsComputer);
         } 
         else    {
-            alert("You lost :(");
+            console.log("You lost :(");
             pointsComputer++;
+            displayPoints(pointsPlayer, pointsComputer);
         }
     }
     // si le joueur choisit ciseaux
-    if (playerChoice == "Scissors")   {
-        if(computerChoice == "Papers")  {
-            alert("Wujuuuuu! You won!");
+    if (playerChoice == "scissor")   {
+        if(computerChoice == "paper")  {
+            console.log("Scissor beats Paper!");
             pointsPlayer++;
+            displayPoints(pointsPlayer, pointsComputer);
         }
         else if (computerChoice == playerChoice) {
-            alert("That's an even!");
+            console.log("That's an even!");
+            displayPoints(pointsPlayer, pointsComputer);
         } 
         else    {
-            alert("You lost :(");
+            console.log("You lost :(");
             pointsComputer++;
+            displayPoints(pointsPlayer, pointsComputer);
         }
     }
     // si le joueur choisit pierre
-    if (playerChoice == "Rocks")   {
-        if(computerChoice == "Scissors")  {
-            alert("Wujuuuuu! You won!");
+    if (playerChoice == "rock")   {
+        if(computerChoice == "scissor")  {
             pointsPlayer++;
+            console.log("Rock beats Scissor!");
+            displayPoints(pointsPlayer, pointsComputer);
         }
         else if (computerChoice == playerChoice) {
-            alert("That's an even!");
+            console.log("That's an even!");
+            displayPoints(pointsPlayer, pointsComputer);
         } 
         else    {
-            alert("You lost :(");
+            console.log("You lost :(");
             pointsComputer++;
+            displayPoints(pointsPlayer, pointsComputer);
         }
     }
 
@@ -103,12 +88,13 @@ function playRound(playerChoice, computerChoice)  {    // fonction qui compare l
 function game() {
     
     let counter = 0;
+    let numberRounds = 5;
 
-    for (counter; counter < 5; counter++)   {
+    for (counter; counter < numberRounds; counter++)   {
 
         // le joueur choisit une réponse entre les 3 options proposées et la réponse est stockée dans une variable const
-        const choicePlayer = setPlayerChoice();
-
+        const choicePlayer = getPlayerChoice();
+        
         // l'ordinateur choisit une réponse, qui sera aléatoire donc, entre les 3 options proposées
         const choiceComputer = getComputerChoice();
 
@@ -120,12 +106,15 @@ function game() {
 
 }
 
-function calculPoints(playerPoints, computerPoints) {
+function calculPoints(playerPoints, computerPoints) {   // fonction qui calcule l'ensemble des points et annonce le résultat final des 5 manches
 
     if (playerPoints > computerPoints)  {
-        alert("You won! Congratulations!");
+        console.log("You won! Congratulations!");
+    }
+    else if (playerPoints == computerPoints)    {
+        console.log("It's en even!");
     }
     else    {
-        alert("You lost! Ahah looser!");
+        console.log("You lost! Ahah looser!");
     }
 }
