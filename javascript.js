@@ -9,12 +9,48 @@ game();
 
 //--------------------------------------FUNCTIONS-------------------------------------------\\
 
+function game() {   // fonction main 
 
-function getPlayerChoice()  {   // return le choix du joueur (NE GERE PS ENCORE LES ERREURS)
-    let choice = prompt("Paper | Rock | scissor");
-    let answer = choice.toLowerCase();
-    console.log(`You picked ${answer}`);
-    return answer;
+    // variables pour éviter d'écrire le code en dur dans la boucle for
+    let counter = 0;
+    let numberRounds = 5;
+
+    for (counter; counter < numberRounds; counter++)   {
+
+        // le joueur choisit une réponse entre les 3 options proposées et la réponse est stockée dans une variable const
+        const choicePlayer = getPlayerChoice();
+        
+        // l'ordinateur choisit une réponse, qui sera aléatoire donc, entre les 3 options proposées
+        const choiceComputer = getComputerChoice();
+
+        // on compare les résultats et affiche le message correspondant
+        playRound(choicePlayer, choiceComputer);
+    }
+
+    calculPoints(pointsPlayer, pointsComputer);
+
+}
+
+function getPlayerChoice()  {   // return le choix du joueur (NE GERE PAS ENCORE LES ERREURS)
+    let keepGoing = true;
+    while (keepGoing)   {   // vérifie si le joueur entre une option correcte 
+
+        let choice = prompt("Paper | Rock | Scissor");  // le joueur entre une réponse
+
+        if (choice == "" || choice === null)    {   // si le joueur valide une réponse vide ou fait echap/cancel, on lance une erreur pour arrêter le programme
+            throw new Error("You quitted the game!");
+        }
+
+        let answer = choice.toLowerCase();  // on met la réponse du joueur en minuscule pour la comparer facilement
+
+        if (answer == "rock" || answer == "paper" || answer == "scissor")   {   // si le joueur entre une réponse correcte, on affiche le choix du joueur et on quitte la boucle
+            keepGoing = false;
+            console.log(`You picked ${answer}`);
+            return answer;
+        } else {
+            console.log("Please enter one of the options without mispelling.");
+        }
+    }
 }
 
 function getComputerChoice()    {   // return le choix de l'ordinateur
@@ -85,34 +121,13 @@ function playRound(playerChoice, computerChoice)  {    // fonction qui compare l
 
 }
 
-function game() {
-    
-    let counter = 0;
-    let numberRounds = 5;
-
-    for (counter; counter < numberRounds; counter++)   {
-
-        // le joueur choisit une réponse entre les 3 options proposées et la réponse est stockée dans une variable const
-        const choicePlayer = getPlayerChoice();
-        
-        // l'ordinateur choisit une réponse, qui sera aléatoire donc, entre les 3 options proposées
-        const choiceComputer = getComputerChoice();
-
-        // on compare les résultats et affiche le message correspondant
-        playRound(choicePlayer, choiceComputer);
-    }
-
-    calculPoints(pointsPlayer, pointsComputer);
-
-}
-
 function calculPoints(playerPoints, computerPoints) {   // fonction qui calcule l'ensemble des points et annonce le résultat final des 5 manches
 
     if (playerPoints > computerPoints)  {
         console.log("You won! Congratulations!");
     }
     else if (playerPoints == computerPoints)    {
-        console.log("It's en even!");
+        console.log("End of the game : it's en even!");
     }
     else    {
         console.log("You lost! Ahah looser!");
